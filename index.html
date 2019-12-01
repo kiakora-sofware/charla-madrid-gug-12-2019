@@ -1,322 +1,367 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Madrid GUG</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/reveal.css">
-		<!-- <link rel="stylesheet" href="css/theme/white.css"> -->
-		<link rel="stylesheet" href="css/theme/beige.css">
+	<title>Madrid GUG</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/monokai.css">
-		<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<!-- <link rel="stylesheet" href="css/theme/white.css"> -->
+	<link rel="stylesheet" href="css/theme/beige.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<div class="reveal">
-		<body>
-			<div class="slides">
-				<section>
-					<h1 class="hide">Madrid GUG</h1>
-					<img data-src="images/madridguglogo.png" alt="Madrid GUG logo" width="30%" style="border: 0;box-shadow: none;">
-					<h3>Compartir dominios y servicios entre proyectos Grails parecía una buena idea</h3>
-					<p>
-						<small>03/12/2019</small>
-					</p>
-				</section>
-				<section>
-					<h3>Jesús Jiménez Ballano</h3>
-					<div class="columns">
-						<article class="column">
-								<ul>
-										<li>Desarrollador desde mucho.</li>
-										<li>Creé Kiakora Software después de varios años de autónomo.</li>
-										<li>Mi primera vez con Groovy y Grails fue allá por 2010.</li>
-										<li>Ahora ayudando a <a href="https://tymit.com" target="_blank">Tymit</a> a reinventar las tarjetas de crédito.</li>
-									
-									</ul>
-									
-						</article>
-						<article class="column">
-								<img data-src="images/profile.jpg" alt="Profile image" width="70%">
-						</article>
-					</div>
-					<div class="contact_info">
-							<a href="http://twitter.com/jjballano">@jjballano</a>
-							<a href="http://twitter.com/jjballano">jesus@kiakora.com</a>
-					</div>
-				</section>
-				<section>
-					<h3>Tymit is hiring!</h3>
-					<div>
-						<img data-src="images/tymitlogo.svg" alt="Tymit logo" width="200px" style="border: 0;box-shadow: none;">
-					</div>
-					<ul>
-						<li>Backend</li>
-						<li>Android/Kotlin</li>
-						<li>iOS/Swift</li>
-					</ul>
-					<div class="contact_info">
-						<a href="https://tymit.workable.com">https://tymit.workable.com</a>
-					</div>
-				</section>
-				<section>
-					<h3>I'm (almost) available!</h3>
-					<div>
-						<img data-src="images/kiakoralogo.svg" alt="Kiakora logo" width="300px" style="border: 0;box-shadow: none;">
-					</div>
-					<div>
-						<a href="mailto:jesus@kiakora.com">jesus@kiakora.com</a>
-					</div>
-				</section>
-				<section>
-					<h3>Two years back...</h3>
-				</section>
-				<section>
-					<p>API usada por las aplicaciones móviles</p>
-					<p class="fragment">Panel de administración para la gestión interna</p>
-					<p class="fragment">¡Tengo una idea!</p>
-					<p class="fragment">Juntemos los servicios y los dominios en un plugin y usémoslo en ambas aplicaciones</p>
-				</section>
-				<section>
-					<h3>Two years later...</h3>
-				</section>
-				<section>
-					<p>Voy a presentar una charla en el Madrid GUG sobre esa decisión tomada hace 2 años</p>	
-				</section>
-				<section>
-					<h2>Problemas</h2>
-				</section>
-				<section>
-					<h3>Disclaimer</h3>
-					<p>Algunos de los problemas vienen por compartir base de datos y no simplemente por compartir dominios y servicios</p>
-					<p>Otros problemas vienen por tener más de un nodo levantado de los proyectos</p>
-				</section>
-				<section>
-					<h3>¿Dónde lo coloco?</h3>
-					<p>Hay servicios o dominios que sabes que sólo uno de tus proyectos lo va a usar.</p>
-					<ul>
-						<li>Plugin: Añadimos un montón de código que no se va a usar en los proyectos principales.</li>
-						<li>Proyecto: Tenemos servicios y dominios desperdigados.</li>
-					</ul>
-					<aside class="notes">
-						<p>Aunque compartamos dominio de negocio, rara vez vamos a necesitar la misma funcionalidad.</p>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+	<link rel="stylesheet" href="css/main.css">
 
-						Al final los servicios tienen métodos que son usados por uno de los 2 proyectos, pero rara vez usan los mismos métodos
-					</aside>
-						
-				</section>
-				<section>
-					<h3>Ejemplo: Dominios Usuario</h3>
-					<p>Cada aplicación tiene su dominio Usuario para el login.</p>
-					<p>Los servicios utilizarán ambos objetos.</p>
-				</section>
-				<section>
-					<h3>Dependencias no usadas</h3>
-					<p>Cualquier dependencia del plugin irá en el proyecto principal, la use o no</p>
-					<ul>
-						<li class="fragment">WAR/JAR más grandes</li>
-						<li class="fragment">Mayor uso de memoria</li>
-						<li class="fragment">Mayor tiempo de arranque</li>
-					</ul>
-					<aside class="notes">
-						Por ejemplo en nuestro caso, hay integraciones que sólo se hacen en 1 de los proyectos pero por tener todos los servicios juntos, acaban yendo a nivel de plugin
-					</aside>
-				</section>
-				<section>
-					<h3>GORM Multi-tenancy</h3>
-					<p>Se dificulta bastante el trabajo con multi-tenancy ya que el API lo usará, pero al panel de administración no.</p>
-					<p>Lo acabamos quitando</p>
-					<aside class="notes">
-						Fue una pena tener que quitarlo porque nos ayudaba con limpieza en el código, seguridad, etc.
-					</aside>
-				</section>
-				<section>
-						<h3>Variables de entorno</h3>
-						<p>Tener dependencias comunes nos obliga a añadirle a un proyecto variables de entorno que no necesita</p>
-						<aside class="notes">
-							Por ejemplo uno de los proyecto utiliza S3 en los servicios, el otro no. Si no le paso la configuración de Amazon a ambos, no levantan
-							</aside>
-						</section>
-				<section>
-					<h3>Actualizaciones de versiones de Grails</h3>
-					<p>Actualizas todos o ninguno (major versions principalmente)</p>
-					<aside class="notes">
-					Puede ser que quieras aumentar una de las aplicaciones porque es más crítica, más pequeña o lo que sea y la otra no porque no tienes tiempo 
-						</aside>
-				</section>
-				<section>
-						<h3>Caches</h3>
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+<div class="reveal">
+
+	<body>
+		<div class="slides">
+			<section>
+				<h1 class="hide">Madrid GUG</h1>
+				<img data-src="images/madridguglogo.png" alt="Madrid GUG logo" width="30%"
+					style="border: 0;box-shadow: none;">
+				<h3>Compartir dominios y servicios entre proyectos Grails parecía una buena idea</h3>
+				<p>
+					<small>03/12/2019</small>
+				</p>
+			</section>
+			<section>
+				<h3>Jesús Jiménez Ballano</h3>
+				<div class="columns">
+					<article class="column">
 						<ul>
-							<li>Hibernate</li>
-							<li>@Cache</li>
+							<li>Desarrollador desde mucho.</li>
+							<li>Fundé Kiakora Software después de varios años de autónomo.</li>
+							<li>Mi primera vez con Groovy y Grails fue allá por 2010.</li>
+							<li>Ahora ayudando a <a href="https://tymit.com" target="_blank">Tymit</a> a reinventar las
+								tarjetas de crédito.</li>
+
 						</ul>
-						<p class="fragment">Posible solución: caches distribuidas</p>
-					</section>
-				<section>
-					<h2>Database (migration plugin)</h2>
-				</section>
-				<section>
-					<p>Mismos dominios lleva normalmente a atacar a la misma base de datos</p>
-					<p>Si tienes más de 1 nodo por proyecto, mismo problema</p>
-				</section>	
-				<section>
-						<h3>Versionado</h3>
-						<pre><code class="hljs" data-trim data-line-numbers="4,8-11">
+
+					</article>
+					<article class="column">
+						<img data-src="images/profile.jpg" alt="Profile image" width="70%">
+					</article>
+				</div>
+				<div class="contact_info">
+					<a href="http://twitter.com/jjballano">@jjballano</a>
+					<a href="http://twitter.com/jjballano">jesus@kiakora.com</a>
+				</div>
+			</section>
+			<section>
+				<h3>Tymit is hiring!</h3>
+				<div>
+					<img data-src="images/tymitlogo.svg" alt="Tymit logo" width="200px"
+						style="border: 0;box-shadow: none;">
+				</div>
+				<ul>
+					<li>Backend</li>
+					<li>Android/Kotlin</li>
+					<li>iOS/Swift</li>
+				</ul>
+				<div class="contact_info">
+					<a href="https://tymit.workable.com">https://tymit.workable.com</a>
+				</div>
+			</section>
+			<section>
+				<h3>¡Estoy (casi) disponible para otro proyecto!</h3>
+				<div>
+					<img data-src="images/kiakoralogo.svg" alt="Kiakora logo" width="300px"
+						style="border: 0;box-shadow: none;">
+				</div>
+				<div>
+					<a href="mailto:jesus@kiakora.com">jesus@kiakora.com</a>
+				</div>
+			</section>
+			<section>
+				<h3>Hace dos años...</h3>
+				<p class="fragment">Nuevo proyecto que consistía en:</p>
+				<ul>
+					<li class="fragment">API usada por las aplicaciones móviles.</li>
+					<li class="fragment">Panel de administración web para la gestión interna.</li>			
+				</ul>
+				<blockquote class="fragment" cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+					&ldquo;Juntemos todos los servicios y dominios en un plugin y así reutilizamos el código en ambas aplicaciones.&rdquo;
+				</blockquote>
+			</section>
+			<section>
+				<h3>Dos años más tarde...</h3>
+				<blockquote class="fragment" cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+					&ldquo;Voy a presentar una charla en el Madrid GUG sobre esa (¿mala?) decisión tomada hace 2 años.&rdquo;
+				</blockquote>
+			</section>
+			<section>
+				<h2>Problemas</h2>
+			</section>
+			<section>
+				<h3>Disclaimer</h3>
+				<p>Algunos de los problemas vienen por compartir base de datos y no simplemente por compartir dominios y
+					servicios.</p>
+				<p>Otros problemas vienen por tener más de un nodo levantado de los proyectos.</p>
+				<aside class="notes">
+					Al API tiene 2 nodos levantados, pero podríamos levantar más
+				</aside>
+			</section>
+			<section>
+				<h3>¿Dónde lo coloco?</h3>
+				<p>Hay clases que van a ser usadas solo por uno de los proyectos.</p>
+				<ul>
+					<li class="fragment">Plugin: Añadimos un montón de código que no se va a usar en los proyectos principales.</li>
+					<li class="fragment">Proyecto: Tenemos servicios y dominios desperdigados.</li>
+				</ul>
+				<aside class="notes">
+					Aunque compartamos dominio de negocio, rara vez vamos a necesitar la misma funcionalidad.
+
+					Al final los servicios tienen métodos que son usados por uno de los 2 proyectos, pero rara vez usan
+					los mismos métodos
+				</aside>
+
+			</section>
+			<section>
+				<h3>Ejemplo: Dominios Usuario</h3>
+				<p>Cada aplicación tiene su dominio Usuario para el login.</p>
+				<p>Los servicios utilizarán ambos objetos.</p>
+			</section>
+			<section>
+				<h3>Dependencias no usadas</h3>
+				<p>Cualquier dependencia del plugin irá en todos los proyectos, la usen o no.</p>
+				<ul>
+					<li class="fragment">WAR/JAR más grandes.</li>
+					<li class="fragment">Mayor uso de memoria.</li>
+					<li class="fragment">Mayor tiempo de arranque.</li>
+				</ul>
+				<aside class="notes">
+					Por ejemplo en nuestro caso, hay integraciones que sólo se hacen en 1 de los proyectos pero por
+					tener todos los servicios juntos, acaban yendo a nivel de plugin
+				</aside>
+			</section>
+			<section>
+				<h3>GORM Multi-tenancy</h3>
+				<p>Se dificulta bastante el trabajo con multi-tenancy si a uno de los proyectos le viene bien implementarlo y al otro no.</p>
+				<aside class="notes">
+					Lo acabamos quitando.
+
+					Fue una pena tener que quitarlo porque nos ayudaba con limpieza en el código, seguridad, etc.
+
+					Nos generaba muchos problemas en los servicios del panel de administración
+				</aside>
+			</section>
+			<section>
+				<h3>Variables de entorno</h3>
+				<p>Tener dependencias y servicios comunes nos obliga a añadirle a un proyecto variables de entorno que igual no necesita.
+				</p>
+				<aside class="notes">
+					Por ejemplo uno de los proyecto utiliza S3 en los servicios, el otro no. Si no le paso la
+					configuración de Amazon a ambos, no levantan.
+				</aside>
+			</section>
+			<section>
+				<h3>Actualizaciones de versiones de Grails</h3>
+				<p>A veces tienes que actualizar todos o ninguno por incompatibilidades entre versiones.</p>
+				<aside class="notes">
+					Puede ser que quieras aumentar una de las aplicaciones porque es más crítica, más pequeña o lo que
+					sea y la otra no porque no tienes tiempo
+				</aside>
+			</section>
+			<section>
+				<h3>Cachés</h3>
+				<p>Se dificulta mucho el trabajar con cachés.</p>
+				<ul>
+					<li>Hibernate (desactivar caché de segundo nivel)</li>
+					<li>@Cacheable</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Database (migration plugin)</h2>
+			</section>
+			<section>
+				<p>Mismos dominios lleva normalmente a atacar a la misma base de datos.</p>
+				<p>Si tienes más de 1 nodo por proyecto, mismo problema.</p>
+			</section>
+			<section>
+				<h3>Versionado de las tablas</h3>
+				<pre><code class="hljs" data-trim data-line-numbers="4,8-11">
 								grails.gorm.default.mapping = {
 								    version false
 								}
-						</code></pre>
-				</section>
-				<section>
-					<h3>Bloqueos en tiempo de arranque</h3>
-					<p>Mayor tiempo de arranque</p>
-					<p>Cambios de esquema en un proyecto bloquea al resto</p>
-					<aside class="notes">
-					
-					Plugin database migration cambia un flag, hace los cambios, y luego lo desbloquea. Mientras tanto, el resto de proyectos están esperando
-						</aside>
-				</section>
-				<section>
-					<h3>Cambios en el esquema</h3>
-					<p>Errores si elimino un campo de la base de datos</p>
-					<p>Errores si añado un campo no nullable</p>
-				</section>
-				<section>
-					<h3>Orden al levantar los proyectos</h3>
-					<p>El más importante tendrá que levantar primero</p>
-					<p>A infraestructura no suele gustarle ordenar los arranques</p>
-				</section>
-				<section >
-						<h3>¿Dónde pongo los scripts de actualización?</h3>
-						<ul>
-							<li class="fragment">Plugin
-									<ul class="sublist fragment">
-											<li>Cualquier proyecto que levante cambia el esquema y puede romper a los otros</li>
-										</ul>
-							</li>
-							<li class="fragment">Proyectos
-									<ul class="sublist  fragment">
-											<li>El otro proyecto puede fallar</li>
-											<li>Los tests funcionales/integración en el proyecto que no tiene los scripts se complican</li>
-											<li>Difícil hacer tests de integración fiables</li>
-										</ul>
-							</li>
+				</code></pre>
+				<aside class="notes">
+					Perdemos la seguridad de no estar grabando un cambio si desde la lectura algún otro proceso lo ha cambiado
+				</aside>	
+			</section>
+			<section>
+				<h3>Bloqueos en tiempo de arranque</h3>
+				<p>Mayor tiempo de arranque por el bloqueo que se hace de la base de datos.</p>
+				<aside class="notes">
+					Plugin database migration cambia un flag, hace los cambios, y luego lo desbloquea. Mientras tanto,
+					el resto de proyectos están esperando
+				</aside>
+			</section>
+			<section>
+				<h3>Cambios en el esquema</h3>
+				<p>Se pueden producir errores si algún proyecto:</p>
+				<ul>
+					<li class="fragment">Elimina un campo de la base de datos.</li>
+					<li class="fragment">Añade un campo no nullable.</li>
+					<li class="fragment">Renombra una tabla o un campo.</li>
+				</ul>
+				<p class="fragment">Hasta que el otro proyecto despliegue con la nueva versión del plugin.</p>
+			</section>
+			<section>
+				<h3>Despliegue de los proyectos</h3>
+				<p>Si hay un cambio importante en el esquema, hay que desplegar todos los proyectos que lo usen.</p>
+				<p>El más importante tendrá que desplegar primero.</p>
+				<aside class="notes">
+					<p>A infraestructura no suele gustarle ordenar los arranques.</p>
+				</aside>
+			</section>
+			<section>
+				<h3>¿Dónde pongo los scripts de actualización?</h3>
+				<ul>
+					<li class="fragment">Plugin
+						<ul class="sublist fragment">
+							<li>Cualquier proyecto que levante cambia el esquema y puede romper a los otros.</li>
 						</ul>
-						
-						<aside class="notes">
-								Al no basarse en el esquema del migration sino en los dominios, se nos puede olvidar añadir algún cambio en el esquema
-							</aside>
-					</section>
-				<section>
-					<h3>Bloqueos de tablas</h3>
-					<p>Cuidado con vistas materializadas actualizándose</p>
-					<p>Los bloqueos de tablas pueden afectar a otras partes críticas de la aplicación</p>
-				</section>
-				<section>
-						<h2>(Posibles) Soluciones</h2>
-						<p>Algunas compatibles entre sí, otras soluciones alternativas</p>
-					</section>
-				<section>
-						<h3>Disclaimer</h3>
-						<p>No todas las soluciones las he probado</p>
-					</section>
-				<section>
-					<h3>Parte el plugin en trozos</h3>
-					<p>Con trozos más pequeños cada proyecto puede incorporar lo que necesite</p>
-				</section>
-				<section>
-					<h3>Comparte solo lo que realmente es común</h3>
-					<p>Cada aplicación consume los datos a su manera</p>
-					<aside class="notes">
-					En este caso, una aplicación consume los datos de un sólo usuario visualizándolos de una determinada manera y el otro consume listados y agregados
-					</aside>
-					<p>Poco código es realmente compartido</p>
-				</section>
-				
-				<section>
-					<h3>No compartas base de datos</h3>
-					<p>Si no se comparten bases de datos, evitaremos muchos de los proyectos</p>
-					<p>A cambio añadimos el problema de la sincronización de los datos</p>
-				</section>
+					</li>
+					<li class="fragment">Proyectos
+						<ul class="sublist  fragment">
+							<li>El otro proyecto puede fallar.</li>
+							<li>Los tests funcionales/integración en el proyecto que no tiene los scripts se complican.
+							</li>
+							<li>Difícil hacer tests de integración fiables dentro del plugin.</li>
+						</ul>
+					</li>
+				</ul>
 
-				<section>
-					<h3>No uses las mismas tablas</h3>
-					<p>Crea vistas [materializadas] para generar los dominios específicos para cada proyecto</p>
-					<p>Sólo un proyecto escribe en una tabla determinada, el otro la consulta a partir de vistas</p>
-					<aside class="notes">
-						Las vistas tienen sus propios problemas: Rendimiento (salvo si son materializadas), sincronización (si son materializadas), dificultan el code review, para actualizarla tengo que borrarla y crearla de nuevo
-					</aside>
-				</section>
-				<section>
-					<h3>Comparte lo menos que puedas de cada tabla</h3>
-					<p>Los dominios en cada proyecto pueden sólo usar los campos que necesitan</p>
-					<p>Cuidado con los campos nullable:false. Hay que usarlos lo menos posible en base de datos</p>
-					<p>No borrar campos de las tablas, simplemente dejar de usarlos</p>
-					<p>Cuidado con los renombres de campos. Cambia sólo el dominio y no el campo en la base de datos si es posible</p>
-					<aside class="notes">
-						Se pueden usar en los objetos de dominio siempre que eso no acabe en la BD
-						Temporalmente, con el tiempo y cuando todo se haya adaptado, ya se pueden borrar
-					</aside>
-				</section>
-				
-				<section>
-					<h3>Externaliza la gestión de la base de datos a otro proceso</h3>
-					<div class="columns">
-						<div style="margin-right: 1em;">
-							<p>Ningún proyecto gestiona la base de datos, sino que es un agente externo</p>
-							<p>Se puede planificar mejor el cambio en los esquemas para no romper</p>
-						</div>
-						<div>
-							<img src="images/migrating-to-microservice-databases.png" alt="Migrating to microservice database book" width="300px">
-						</div>
+				<aside class="notes">
+					los test de integración dentro del plugin, al no basarse en el esquema del migration sino en los dominios, se nos puede olvidar añadir algún
+					cambio en el esquema.
+				</aside>
+			</section>
+			<section>
+				<h3>Bloqueos de tablas</h3>
+				<p>Cuidado con vistas materializadas actualizándose.</p>
+				<p>Los bloqueos de tablas o filas pueden afectar a otras partes críticas.</p>
+			</section>
+			<section>
+				<h2>(Posibles) Soluciones</h2>
+				<p>Algunas compatibles entre sí, otras soluciones alternativas.</p>
+			</section>
+			<section>
+				<h3>Disclaimer</h3>
+				<p>No todas las soluciones las he probado.</p>
+			</section>
+			<section>
+				<h3>Partir el plugin en varios plugins</h3>
+				<p>Con trozos más pequeños cada proyecto puede incorporar solo lo que necesite.</p>
+			</section>
+			<section>
+				<h3>El plugin solo con lo que realmente es común</h3>
+				<p>Cada aplicación consume los datos a su manera.</p>
+				<p>Poco código es realmente compartido.</p>
+				<p>Se tienen servicios y dominios en el plugin y en cada uno de los proyectos.</p>
+				<aside class="notes">
+					En este caso, una aplicación consume los datos de un sólo usuario visualizándolos de una determinada
+					manera y el otro consume listados y agregados
+				</aside>
+			</section>
+
+			<section>
+				<h3>No compartas base de datos</h3>
+				<p>Si no se comparten bases de datos, evitaremos muchos de los problemas.</p>
+				<p>A cambio añadimos el problema de la sincronización y duplicidad de los datos.</p>
+			</section>
+
+			<section>
+				<h3>No uses las mismas tablas</h3>
+				<p>Crea vistas [materializadas] para generar los dominios específicos para cada proyecto.</p>
+				<p>Solo un proyecto escribe en una tabla determinada, el otro la consulta a partir de vistas.</p>
+				<aside class="notes">
+					Las vistas tienen sus propios problemas: Rendimiento (salvo si son materializadas), sincronización
+					(si son materializadas), dificultan el code review, para actualizarla tengo que borrarla y crearla
+					de nuevo
+
+					Las escrituras puede ser que haya que hacerlas con llamadas al otro proyecto
+				</aside>
+			</section>
+			<section>
+				<h3>Comparte lo menos que puedas de cada tabla</h3>
+				<p>Dominios con solo lo imprescindible.</p>
+				<p>Mínima cantidad de campos no nullables (en base de datos).</p>
+				<p>No renombrar tablas o campos de la base de datos, solo el dominio.</p>
+				<aside class="notes">
+					Se pueden usar en los objetos de dominio nullable:false siempre que eso no acabe en la BD
+					Temporalmente, con el tiempo y cuando todo se haya adaptado, ya se pueden borrar
+				</aside>
+			</section>
+
+			<section>
+				<h3>Externaliza la gestión de la base de datos a otro proceso</h3>
+				<div class="columns">
+					<div style="margin-right: 1em;">
+						<p>Ningún proyecto gestiona la base de datos, sino que es un agente externo.</p>
+						<p>Se puede planificar mejor el cambio en los esquemas para no romper.</p>
 					</div>
-					<aside class="notes">
-					En el libro se explican muy bien como son los procesos cuando se tienen microservicios y se quiere borar un campo, renombrar, crear uno nuevo no nullable, etc
-					</aside>
-				</section>
-				<section>
-					<h3>Microservicios (con responsabilidad)</h3>
-					<p>Cada microservicio gestiona sus caches, bases de datos, etc</p>
-				</section>
-				<section>
-					<h3>Event sourcing / CQRS</h3>
-					<p>¡Y se acabó el compartir nada!</p>
-					<p>A cambio, mucha mayor complejidad</p>
-				</section>
-				<section >
-					<h3>¿Preguntas o comentarios?</h3>
-					<img src="https://i.giphy.com/8vvW3EUR0jLTlJQ8i4.gif" alt="Gif for questions">
-				</section>
-			</div>
+					<div class="fragment">
+						<img src="images/migrating-to-microservice-databases.png"
+							alt="Migrating to microservice database book" width="300px">
+					</div>
+				</div>
+				<aside class="notes">
+					En el libro se explican muy bien como son los procesos cuando se tienen microservicios y se quiere
+					borar un campo, renombrar, crear uno nuevo no nullable, etc
+				</aside>
+			</section>
+			<section>
+				<h3>Cachés distribuidas</h3>
+				<p>Una caché distribuída puede solucionar alguno de los problemas con las cachés.</p>
+			</section>
+			<section>
+				<h3>Microservicios</h3>
+				<p>Cada microservicio gestiona sus cachés, bases de datos, etc.</p>
+				<p class="fragment">Úsalos con moderación y bajo vigilancia de un adulto.</p>
+			</section>
+			<section>
+				<h3>Event sourcing / CQRS</h3>
+				<p>¡Y se acabó el compartir nada!</p>
+				<p class="fragment">A cambio de mayor complejidad en el código.</p>
+			</section>
+			<section>
+				<h3>¿Preguntas o comentarios?</h3>
+				<img src="https://i.giphy.com/8vvW3EUR0jLTlJQ8i4.gif" alt="Gif for questions">
+			</section>
 		</div>
+</div>
 
-		<script src="js/reveal.js"></script>
+<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
-				]
-			});
-		</script>
-	</body>
+<script>
+	// More info about config & dependencies:
+	// - https://github.com/hakimel/reveal.js#configuration
+	// - https://github.com/hakimel/reveal.js#dependencies
+	Reveal.initialize({
+		dependencies: [
+			{ src: 'plugin/markdown/marked.js' },
+			{ src: 'plugin/markdown/markdown.js' },
+			{ src: 'plugin/notes/notes.js', async: true },
+			{ src: 'plugin/zoom-js/zoom.js', async: true },
+			{ src: 'plugin/highlight/highlight.js', async: true }
+		]
+	});
+</script>
+</body>
+
 </html>
