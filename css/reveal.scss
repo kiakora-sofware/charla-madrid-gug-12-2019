@@ -27,7 +27,7 @@ body {
 	margin: 0;
 
 	background-color: #fff;
-	color: #000;En cada uno En cada uno de los proyectos cada uno de los proyectos los proyectos
+	color: #000;
 }
 
 
@@ -1777,3 +1777,13 @@ $notesWidthPercent: 25%;
 	top: -9999px;
 	left: -9999px;
  }
+
+.contact_info {
+	display: flex;
+	margin-top: 1.8rem;
+    justify-content: space-around;
+} 
+
+.sublist {
+    font-size: 0.8em;
+}
