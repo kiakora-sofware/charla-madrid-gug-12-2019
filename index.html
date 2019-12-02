@@ -111,9 +111,6 @@
 					<li>Proyecto web para el panel de administración.</li>
 					<li>Otros proyectos pequeños.</li>			
 				</ul>
-				<blockquote class="fragment" cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-					&ldquo;Juntemos todos los servicios y dominios en un plugin y así reutilizamos el código en ambas aplicaciones.&rdquo;
-				</blockquote>
 			</section>
 			<section>
 				<h2>Problemas</h2>
@@ -146,6 +143,10 @@
 				<h3>Ejemplo: Dominios Usuario</h3>
 				<p>Cada aplicación tiene su dominio Usuario para el login.</p>
 				<p>Los servicios utilizarán ambos objetos.</p>
+				<aside class="notes">
+					El dominio User en el Rest se usa para login y en el otro sólo para listarlos.
+					El panel de administración tiene otro dominio aparte para sus logins
+				</aside>
 			</section>
 			<section>
 				<h3>Dependencias no usadas</h3>
@@ -161,8 +162,8 @@
 				</aside>
 			</section>
 			<section>
-				<h3>GORM Multi-tenancy</h3>
-				<p>Se dificulta bastante el trabajo con multi-tenancy si a uno de los proyectos le viene bien implementarlo y al otro no.</p>
+				<h3>GORM Multi-tenant</h3>
+				<p>Se dificulta bastante el trabajo con multi-tenant si a uno de los proyectos le viene bien implementarlo y al otro no.</p>
 				<aside class="notes">
 					Lo acabamos quitando.
 
@@ -254,6 +255,7 @@
 							<li>Los tests funcionales/integración en el proyecto que no tiene los scripts se complican.
 							</li>
 							<li>Difícil hacer tests de integración fiables dentro del plugin.</li>
+							<li>Los cambios que el otro proyecto necesita, se tienen que poner en el que tiene los scripts.</li>
 						</ul>
 					</li>
 				</ul>
@@ -261,6 +263,8 @@
 				<aside class="notes">
 					los test de integración dentro del plugin, al no basarse en el esquema del migration sino en los dominios, se nos puede olvidar añadir algún
 					cambio en el esquema.
+
+					Si meto un campo en el proyecto A y los scripts están en el B, los tests de A pueden pasar a pesar de haberme olvidado poner algo (ej, constraints)
 				</aside>
 			</section>
 			<section>
@@ -279,6 +283,13 @@
 			<section>
 				<h3>Partir el plugin en varios plugins</h3>
 				<p>Con trozos más pequeños cada proyecto puede incorporar solo lo que necesite.</p>
+				<aside class="notes">
+					Nos quita el problema de las dependencias no usadas, de código que se importe y no se use, etc
+
+					A cambio, una mayor gestión de plugins.
+
+					DDD
+				</aside>
 			</section>
 			<section>
 				<h3>El plugin solo con lo que realmente es común</h3>
@@ -292,13 +303,13 @@
 			</section>
 
 			<section>
-				<h3>No compartas base de datos</h3>
+				<h3>No compartir base de datos</h3>
 				<p>Si no se comparten bases de datos, evitaremos muchos de los problemas.</p>
 				<p>A cambio añadimos el problema de la sincronización y duplicidad de los datos.</p>
 			</section>
 
 			<section>
-				<h3>No uses las mismas tablas</h3>
+				<h3>No usar las mismas tablas</h3>
 				<p>Crea vistas [materializadas] para generar los dominios específicos para cada proyecto.</p>
 				<p>Solo un proyecto escribe en una tabla determinada, el otro la consulta a partir de vistas.</p>
 				<aside class="notes">
@@ -310,7 +321,7 @@
 				</aside>
 			</section>
 			<section>
-				<h3>Comparte lo menos que puedas de cada tabla</h3>
+				<h3>Compartir lo mínimo posible de cada tabla</h3>
 				<p>Dominios con solo lo imprescindible.</p>
 				<p>Mínima cantidad de campos no nullables (en base de datos).</p>
 				<p>No renombrar tablas o campos de la base de datos, solo el dominio.</p>
@@ -333,6 +344,8 @@
 					</div>
 				</div>
 				<aside class="notes">
+					Si tenemos 17 nodos de un proyecto, no queremos que todos comprueben el esquema de la base de datos (migration)
+					
 					En el libro se explican muy bien como son los procesos cuando se tienen microservicios y se quiere
 					borar un campo, renombrar, crear uno nuevo no nullable, etc
 				</aside>
